@@ -1,0 +1,43 @@
+stages:
+  - lint
+  - test
+  - security
+  - build
+  - deploy
+
+lint:
+  stage: lint
+  script:
+    - npm install
+    - npm run lint
+
+test:
+  stage: test
+  script:
+    - npm run test
+
+security:
+  stage: security
+  script:
+    - npm run security
+
+build:
+  stage: build
+  script:
+    - npm run build
+  only:
+    - main
+
+deploy_staging:
+  stage: deploy
+  script:
+    - ./scripts/deploy.sh staging
+  only:
+    - develop
+
+deploy_production:
+  stage: deploy
+  script:
+    - ./scripts/deploy.sh production
+  only:
+    - main
